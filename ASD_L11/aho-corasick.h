@@ -11,15 +11,15 @@ private:
     struct Node
     {
         std::map<char, int> next;
-        int link = -1;      // suffix link
-        int exit_link = -1;  // output link
+        int link = -1;      
+        int exit_link = -1;  
         bool is_terminal = false;
         int pattern_index = -1;
     };
 
     std::vector<Node> bor;
     std::vector<std::string> patterns;
-    int comparisons = 0;
+    int _compares = 0;
 
 public:
     AhoCorasick()
@@ -63,7 +63,7 @@ public:
                 while (link != -1 && bor[link].next.find(c) == bor[link].next.end())
                 {
                     link = bor[link].link;
-                    comparisons++;
+                    _compares++;
                 }
 
                 if (link == -1)
@@ -97,12 +97,12 @@ public:
         for (int i = 0; i < text.size(); ++i)
         {
             char c = text[i];
-            comparisons++;
+            _compares++;
 
             while (current != 0 && bor[current].next.find(c) == bor[current].next.end())
             {
                 current = bor[current].link;
-                comparisons++;
+                _compares++;
             }
 
             if (bor[current].next.find(c) != bor[current].next.end())
@@ -126,13 +126,13 @@ public:
         return matches;
     }
 
-    int comparisons() const
+    int compares() const
     {
-        return comparisons;
+        return _compares;
     }
 
     void reset()
     {
-        comparisons = 0;
+        _compares = 0;
     }
 };
